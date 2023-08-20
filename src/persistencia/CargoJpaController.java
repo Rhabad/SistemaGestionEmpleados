@@ -5,15 +5,17 @@
 package persistencia;
 
 import java.io.Serializable;
+import javax.persistence.Query;
+import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import modeloBD.Empleado;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Query;
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.Persistence;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import logica.Cargo;
+import modeloBD.Cargo;
 import persistencia.exceptions.NonexistentEntityException;
 
 /**
@@ -30,18 +32,35 @@ public class CargoJpaController implements Serializable {
     public CargoJpaController(){
         emf = Persistence.createEntityManagerFactory("GestionDeEmpleadosPU");
     }
-    
 
     public EntityManager getEntityManager() {
         return emf.createEntityManager();
     }
 
     public void create(Cargo cargo) {
+        if (cargo.getEmpleadoCargo() == null) {
+            cargo.setEmpleadoCargo(new ArrayList<Empleado>());
+        }
         EntityManager em = null;
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            List<Empleado> attachedEmpleadoCargo = new ArrayList<Empleado>();
+            for (Empleado empleadoCargoEmpleadoToAttach : cargo.getEmpleadoCargo()) {
+                empleadoCargoEmpleadoToAttach = em.getReference(empleadoCargoEmpleadoToAttach.getClass(), empleadoCargoEmpleadoToAttach.getRut());
+                attachedEmpleadoCargo.add(empleadoCargoEmpleadoToAttach);
+            }
+            cargo.setEmpleadoCargo(attachedEmpleadoCargo);
             em.persist(cargo);
+            for (Empleado empleadoCargoEmpleado : cargo.getEmpleadoCargo()) {
+                Cargo oldCargoFKOfEmpleadoCargoEmpleado = empleadoCargoEmpleado.getCargoFK();
+                empleadoCargoEmpleado.setCargoFK(cargo);
+                empleadoCargoEmpleado = em.merge(empleadoCargoEmpleado);
+                if (oldCargoFKOfEmpleadoCargoEmpleado != null) {
+                    oldCargoFKOfEmpleadoCargoEmpleado.getEmpleadoCargo().remove(empleadoCargoEmpleado);
+                    oldCargoFKOfEmpleadoCargoEmpleado = em.merge(oldCargoFKOfEmpleadoCargoEmpleado);
+                }
+            }
             em.getTransaction().commit();
         } finally {
             if (em != null) {
@@ -55,7 +74,34 @@ public class CargoJpaController implements Serializable {
         try {
             em = getEntityManager();
             em.getTransaction().begin();
+            Cargo persistentCargo = em.find(Cargo.class, cargo.getIdCargo());
+            List<Empleado> empleadoCargoOld = persistentCargo.getEmpleadoCargo();
+            List<Empleado> empleadoCargoNew = cargo.getEmpleadoCargo();
+            List<Empleado> attachedEmpleadoCargoNew = new ArrayList<Empleado>();
+            for (Empleado empleadoCargoNewEmpleadoToAttach : empleadoCargoNew) {
+                empleadoCargoNewEmpleadoToAttach = em.getReference(empleadoCargoNewEmpleadoToAttach.getClass(), empleadoCargoNewEmpleadoToAttach.getRut());
+                attachedEmpleadoCargoNew.add(empleadoCargoNewEmpleadoToAttach);
+            }
+            empleadoCargoNew = attachedEmpleadoCargoNew;
+            cargo.setEmpleadoCargo(empleadoCargoNew);
             cargo = em.merge(cargo);
+            for (Empleado empleadoCargoOldEmpleado : empleadoCargoOld) {
+                if (!empleadoCargoNew.contains(empleadoCargoOldEmpleado)) {
+                    empleadoCargoOldEmpleado.setCargoFK(null);
+                    empleadoCargoOldEmpleado = em.merge(empleadoCargoOldEmpleado);
+                }
+            }
+            for (Empleado empleadoCargoNewEmpleado : empleadoCargoNew) {
+                if (!empleadoCargoOld.contains(empleadoCargoNewEmpleado)) {
+                    Cargo oldCargoFKOfEmpleadoCargoNewEmpleado = empleadoCargoNewEmpleado.getCargoFK();
+                    empleadoCargoNewEmpleado.setCargoFK(cargo);
+                    empleadoCargoNewEmpleado = em.merge(empleadoCargoNewEmpleado);
+                    if (oldCargoFKOfEmpleadoCargoNewEmpleado != null && !oldCargoFKOfEmpleadoCargoNewEmpleado.equals(cargo)) {
+                        oldCargoFKOfEmpleadoCargoNewEmpleado.getEmpleadoCargo().remove(empleadoCargoNewEmpleado);
+                        oldCargoFKOfEmpleadoCargoNewEmpleado = em.merge(oldCargoFKOfEmpleadoCargoNewEmpleado);
+                    }
+                }
+            }
             em.getTransaction().commit();
         } catch (Exception ex) {
             String msg = ex.getLocalizedMessage();
@@ -84,6 +130,11 @@ public class CargoJpaController implements Serializable {
                 cargo.getIdCargo();
             } catch (EntityNotFoundException enfe) {
                 throw new NonexistentEntityException("The cargo with id " + id + " no longer exists.", enfe);
+            }
+            List<Empleado> empleadoCargo = cargo.getEmpleadoCargo();
+            for (Empleado empleadoCargoEmpleado : empleadoCargo) {
+                empleadoCargoEmpleado.setCargoFK(null);
+                empleadoCargoEmpleado = em.merge(empleadoCargoEmpleado);
             }
             em.remove(cargo);
             em.getTransaction().commit();

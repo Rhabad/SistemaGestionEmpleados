@@ -2,12 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package logica;
+package modeloBD;
 
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -15,28 +18,38 @@ import javax.persistence.OneToMany;
  *
  * @author NICOLAS
  */
-@Entity
-public class Empleado {
+@Entity (name = "empleado")
+public class Empleado implements Serializable {
     @Id
+    @Column(name = "rut")
     private String rut;
-    @Basic
+    @Column(name = "nombres")
     private String nombres;
+    @Column(name = "apellidos")
     private String apellidos;
-    private String fechaNacimiento;
+    @Column(name = "fechaNacimiento")
+    private Date fechaNacimiento;
+    @Column(name = "direccion")
     private String direccion;
+    @Column(name = "telefono")
     private int telefono;
+    @Column(name = "email")
     private String email;
     
-    
     @ManyToOne
-    private Cargo cargo;
+    @JoinColumn(name = "cargoFK")
+    private Cargo cargoFK;
     @ManyToOne
-    private Departamento depart;
+    @JoinColumn(name = "departamentoFK")
+    private Departamento departamentoFK;
+    @OneToMany(mappedBy = "rutFK")
+    private List<ContactosEmergencia> contacto;
     
-    @OneToMany (mappedBy = "emple")
-    private List<ContactoEmergencia> contEme;
+    
+    public Empleado(){
+    }
 
-    public Empleado(String rut, String nombres, String apellidos, String fechaNacimiento, String direccion, int telefono, String email, Cargo cargo, Departamento depart, List<ContactoEmergencia> contEme) {
+    public Empleado(String rut, String nombres, String apellidos, Date fechaNacimiento, String direccion, int telefono, String email, Cargo cargoFK, Departamento departamentoFK, List<ContactosEmergencia> contacto) {
         this.rut = rut;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -44,10 +57,12 @@ public class Empleado {
         this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
-        this.cargo = cargo;
-        this.depart = depart;
-        this.contEme = contEme;
+        this.cargoFK = cargoFK;
+        this.departamentoFK = departamentoFK;
+        this.contacto = contacto;
     }
+
+    
 
     public String getRut() {
         return rut;
@@ -73,11 +88,11 @@ public class Empleado {
         this.apellidos = apellidos;
     }
 
-    public String getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(String fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -105,28 +120,28 @@ public class Empleado {
         this.email = email;
     }
 
-    public Cargo getCargo() {
-        return cargo;
+    public Cargo getCargoFK() {
+        return cargoFK;
     }
 
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
+    public void setCargoFK(Cargo cargoFK) {
+        this.cargoFK = cargoFK;
     }
 
-    public Departamento getDepart() {
-        return depart;
+    public Departamento getDepartamentoFK() {
+        return departamentoFK;
     }
 
-    public void setDepart(Departamento depart) {
-        this.depart = depart;
+    public void setDepartamentoFK(Departamento departamentoFK) {
+        this.departamentoFK = departamentoFK;
     }
 
-    public List<ContactoEmergencia> getContEme() {
-        return contEme;
+    public List<ContactosEmergencia> getContacto() {
+        return contacto;
     }
 
-    public void setContEme(List<ContactoEmergencia> contEme) {
-        this.contEme = contEme;
+    public void setContacto(List<ContactosEmergencia> contacto) {
+        this.contacto = contacto;
     }
     
     
