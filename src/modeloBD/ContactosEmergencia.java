@@ -8,6 +8,7 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
@@ -17,6 +18,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class ContactosEmergencia implements Serializable {
     @Id
+    @Column(name = "rutContacto")
     private String rutContacto;
     @Column(name = "nombreContacto")
     private String nombreContacto;
@@ -28,6 +30,7 @@ public class ContactosEmergencia implements Serializable {
     private String email;
     
     @ManyToOne
+    @JoinColumn(name = "rutFK")
     private Empleado rutFK;
     
     public ContactosEmergencia(){

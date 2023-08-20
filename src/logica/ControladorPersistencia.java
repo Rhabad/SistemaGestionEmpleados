@@ -38,7 +38,10 @@ public class ControladorPersistencia {
     
     
     //======== CONTACTO EMERGENCIA ==========
-    
+    public List<ContactosEmergencia> mostrarContactos(){
+        List<ContactosEmergencia> contacto = conJPA.findContactosEmergenciaEntities();
+        return contacto;
+    }
     
     
     

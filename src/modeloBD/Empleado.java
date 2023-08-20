@@ -42,6 +42,7 @@ public class Empleado implements Serializable {
     @ManyToOne
     @JoinColumn(name = "departamentoFK")
     private Departamento departamentoFK;
+    
     @OneToMany(mappedBy = "rutFK")
     private List<ContactosEmergencia> contacto;
     
@@ -144,5 +145,8 @@ public class Empleado implements Serializable {
         this.contacto = contacto;
     }
     
-    
+    @Override
+    public String toString(){
+        return ""+rut;
+    }
 }
