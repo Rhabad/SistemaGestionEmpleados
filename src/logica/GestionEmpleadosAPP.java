@@ -30,7 +30,7 @@ public class GestionEmpleadosAPP {
             System.out.println(dep.getIdDepartamento()+" - "+dep.getNomDepartamento());
         }
         */
-        System.out.println("TODOS LOS CONTACTOS DE EMERGENCIAhola");
+        System.out.println("TODOS LOS CONTACTOS DE EMERGENCIA golas");
         List<ContactosEmergencia> contac = con.mostrarContactos();
         for (ContactosEmergencia conta : contac) {
             System.out.println(conta.getRutContacto()+" - "+conta.getNombreContacto()+" - "+conta.getApellidoContacto()+" - "+conta.getTelefonoContacto()+" - "+conta.getEmail()+" - "+conta.getRutFK());
