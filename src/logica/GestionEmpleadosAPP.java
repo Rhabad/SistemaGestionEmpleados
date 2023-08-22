@@ -6,6 +6,7 @@ package logica;
 
 import java.util.List;
 import modeloBD.*;
+import vistas.GestionarEmpleados;
 
 /**
  *
@@ -13,9 +14,10 @@ import modeloBD.*;
  */
 public class GestionEmpleadosAPP {
     public static void main(String [] args){
-        ControladorPersistencia con = new ControladorPersistencia();
+        GestionarEmpleados ges = new GestionarEmpleados();
+        /*ControladorPersistencia con = new ControladorPersistencia();
         
-        /*
+        
         System.out.println("TODOS LOS CARGOS");
         
         List<Cargo> car = con.mostrarCargos();
@@ -29,8 +31,8 @@ public class GestionEmpleadosAPP {
         for (Departamento dep : depart) {
             System.out.println(dep.getIdDepartamento()+" - "+dep.getNomDepartamento());
         }
-        */
-        System.out.println("TODOS LOS CONTACTOS DE EMERGENCIA golas");
+        
+        System.out.println("TODOS LOS CONTACTOS DE EMERGENCIA");
         List<ContactosEmergencia> contac = con.mostrarContactos();
         for (ContactosEmergencia conta : contac) {
             System.out.println(conta.getRutContacto()+" - "+conta.getNombreContacto()+" - "+conta.getApellidoContacto()+" - "+conta.getTelefonoContacto()+" - "+conta.getEmail()+" - "+conta.getRutFK());
@@ -40,7 +42,11 @@ public class GestionEmpleadosAPP {
         
         for (Empleado emp : empLista) {
             System.out.println(emp.getRut()+" - "+emp.getNombres()+" - "+emp.getApellidos()+" - "+emp.getFechaNacimiento()+" - "+emp.getDireccion()+" - "+emp.getTelefono()+" - "+emp.getEmail()+" - "+emp.getCargoFK()+" - "+emp.getDepartamentoFK());
-        }
-
+        }*/
+        
+        
+        ges.setVisible(true);
+        ges.setResizable(false);
+        ges.setLocationRelativeTo(null);
     }
 }
