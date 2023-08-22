@@ -34,6 +34,13 @@ public class Cargo implements Serializable {
     public Cargo(){
     }
 
+    public Cargo(int idCargo, String nomCargo) {
+        this.idCargo = idCargo;
+        this.nomCargo = nomCargo;
+    }
+    
+    
+
     public Cargo(int idCargo, String nomCargo, List<Empleado> empleadoCargo) {
         this.idCargo = idCargo;
         this.nomCargo = nomCargo;
@@ -66,11 +73,4 @@ public class Cargo implements Serializable {
         this.empleadoCargo = empleadoCargo;
     }
 
-    @Override
-    public String toString() {
-        return "" + idCargo;
-    }
-     
-    
-    
 }

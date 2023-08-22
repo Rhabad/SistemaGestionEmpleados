@@ -50,6 +50,20 @@ public class Empleado implements Serializable {
     public Empleado(){
     }
 
+    public Empleado(String rut, String nombres, String apellidos, Date fechaNacimiento, String direccion, int telefono, String email, Cargo cargoFK, Departamento departamentoFK) {
+        this.rut = rut;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
+        this.fechaNacimiento = fechaNacimiento;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+        this.cargoFK = cargoFK;
+        this.departamentoFK = departamentoFK;
+    }
+    
+    
+
     public Empleado(String rut, String nombres, String apellidos, Date fechaNacimiento, String direccion, int telefono, String email, Cargo cargoFK, Departamento departamentoFK, List<ContactosEmergencia> contacto) {
         this.rut = rut;
         this.nombres = nombres;
@@ -145,8 +159,4 @@ public class Empleado implements Serializable {
         this.contacto = contacto;
     }
     
-    @Override
-    public String toString(){
-        return ""+rut;
-    }
 }

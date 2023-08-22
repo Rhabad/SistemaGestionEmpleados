@@ -15,8 +15,8 @@ import vistas.GestionarEmpleados;
 public class GestionEmpleadosAPP {
     public static void main(String [] args){
         GestionarEmpleados ges = new GestionarEmpleados();
-        /*ControladorPersistencia con = new ControladorPersistencia();
-        
+        ControladorPersistencia con = new ControladorPersistencia();
+        /*
         
         System.out.println("TODOS LOS CARGOS");
         
@@ -41,9 +41,9 @@ public class GestionEmpleadosAPP {
         List<Empleado> empLista = con.mostrarEmpleados();
         
         for (Empleado emp : empLista) {
-            System.out.println(emp.getRut()+" - "+emp.getNombres()+" - "+emp.getApellidos()+" - "+emp.getFechaNacimiento()+" - "+emp.getDireccion()+" - "+emp.getTelefono()+" - "+emp.getEmail()+" - "+emp.getCargoFK()+" - "+emp.getDepartamentoFK());
-        }*/
-        
+            System.out.println(emp.getRut()+" - "+emp.getNombres()+" - "+emp.getApellidos()+" - "+emp.getFechaNacimiento()+" - "+emp.getDireccion()+" - "+emp.getTelefono()+" - "+emp.getEmail()+" - "+emp.getCargoFK().getNomCargo()+" - "+emp.getDepartamentoFK().getNomDepartamento());
+        }
+        */
         
         ges.setVisible(true);
         ges.setResizable(false);

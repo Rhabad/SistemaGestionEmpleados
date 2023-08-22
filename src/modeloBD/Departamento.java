@@ -32,6 +32,13 @@ public class Departamento implements Serializable {
     public Departamento(){
     }
 
+    public Departamento(int idDepartamento, String nomDepartamento) {
+        this.idDepartamento = idDepartamento;
+        this.nomDepartamento = nomDepartamento;
+    }
+    
+    
+
     public Departamento(int idDepartamento, String nomDepartamento, List<Empleado> empleadoDepartamento) {
         this.idDepartamento = idDepartamento;
         this.nomDepartamento = nomDepartamento;
@@ -64,10 +71,6 @@ public class Departamento implements Serializable {
         this.empleadoDepartamento = empleadoDepartamento;
     }
 
-    @Override
-    public String toString() {
-        return "" +idDepartamento;
-    }
 
     
     
