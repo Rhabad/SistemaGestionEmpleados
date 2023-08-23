@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 /**
@@ -34,10 +33,16 @@ public class Cargo implements Serializable {
     public Cargo(){
     }
 
+    public Cargo(String nomCargo) {
+        this.nomCargo = nomCargo;
+    }
+
     public Cargo(int idCargo, String nomCargo) {
         this.idCargo = idCargo;
         this.nomCargo = nomCargo;
     }
+    
+    
     
     
 
@@ -73,4 +78,11 @@ public class Cargo implements Serializable {
         this.empleadoCargo = empleadoCargo;
     }
 
+    @Override
+    public String toString() {
+        return "Cargo{" + "idCargo=" + idCargo + ", nomCargo=" + nomCargo + '}';
+    }
+
+    
+    
 }

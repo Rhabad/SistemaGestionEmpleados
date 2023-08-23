@@ -190,8 +190,18 @@ public class GestionarEmpleados extends javax.swing.JFrame {
         });
 
         btnDepartamentos.setText("Departamentos");
+        btnDepartamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDepartamentosActionPerformed(evt);
+            }
+        });
 
         btnCargos.setText("Cargos");
+        btnCargos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargosActionPerformed(evt);
+            }
+        });
 
         btnConfiguracion.setText("Configuracion");
         btnConfiguracion.addActionListener(new java.awt.event.ActionListener() {
@@ -287,6 +297,26 @@ public class GestionarEmpleados extends javax.swing.JFrame {
         
         this.setVisible(false);
     }//GEN-LAST:event_btnConfiguracionActionPerformed
+
+    private void btnCargosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargosActionPerformed
+        Cargos car = new Cargos();
+        
+        car.setVisible(true);
+        car.setResizable(false);
+        car.setLocationRelativeTo(null);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_btnCargosActionPerformed
+
+    private void btnDepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDepartamentosActionPerformed
+        Departamentos depa = new Departamentos();
+        
+        depa.setVisible(true);
+        depa.setResizable(false);
+        depa.setLocationRelativeTo(null);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_btnDepartamentosActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

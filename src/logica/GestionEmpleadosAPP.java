@@ -16,8 +16,8 @@ public class GestionEmpleadosAPP {
     public static void main(String [] args){
         GestionarEmpleados ges = new GestionarEmpleados();
         ControladorPersistencia con = new ControladorPersistencia();
-        /*
         
+        /*
         System.out.println("TODOS LOS CARGOS");
         
         List<Cargo> car = con.mostrarCargos();

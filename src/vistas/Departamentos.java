@@ -4,17 +4,24 @@
  */
 package vistas;
 
+import java.util.List;
+import javax.swing.DefaultListModel;
+import logica.ControladorPersistencia;
+import modeloBD.Departamento;
+
 /**
  *
  * @author NICOLAS
  */
 public class Departamentos extends javax.swing.JFrame {
-
+    private ControladorPersistencia con = new ControladorPersistencia();
+    private DefaultListModel modelo = new DefaultListModel();
     /**
      * Creates new form Departamentos
      */
     public Departamentos() {
         initComponents();
+        lista.setModel(modelo);
     }
 
     /**
@@ -33,17 +40,35 @@ public class Departamentos extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnMostrarDepartamentos = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lista = new javax.swing.JList<>();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Nombre del Departamento");
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnMostrarDepartamentos.setText("Mostrar Departamentos");
+        btnMostrarDepartamentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMostrarDepartamentosActionPerformed(evt);
+            }
+        });
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lista);
+
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -57,10 +82,11 @@ public class Departamentos extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txtNomDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
                         .addComponent(btnAgregar)
-                        .addGap(33, 33, 33)
-                        .addComponent(btnMostrarDepartamentos))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnMostrarDepartamentos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRegresar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -74,7 +100,8 @@ public class Departamentos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnMostrarDepartamentos)
-                    .addComponent(btnAgregar))
+                    .addComponent(btnAgregar)
+                    .addComponent(btnRegresar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(15, Short.MAX_VALUE))
@@ -105,15 +132,42 @@ public class Departamentos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        String nomDepa = txtNomDepartamento.getText();
+        Departamento depa = new Departamento(nomDepa);
+        
+        con.crearDepartamento(depa);
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        GestionarEmpleados ges = new GestionarEmpleados();
+        
+        ges.setVisible(true);
+        ges.setResizable(false);
+        ges.setLocationRelativeTo(null);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnMostrarDepartamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarDepartamentosActionPerformed
+        modelo.removeAllElements();
+        List<Departamento> depaLista = con.mostrarDepartamentos();
+        
+        for (Departamento dep : depaLista) {
+            modelo.addElement(dep);
+        }
+    }//GEN-LAST:event_btnMostrarDepartamentosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnMostrarDepartamentos;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JList<String> lista;
     private javax.swing.JTextField txtNomDepartamento;
     // End of variables declaration//GEN-END:variables
 }
