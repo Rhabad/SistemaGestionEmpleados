@@ -4,17 +4,27 @@
  */
 package vistas;
 
+import java.util.List;
+import javax.swing.DefaultListModel;
+import logica.ControladorPersistencia;
+import modeloBD.ContactosEmergencia;
+import modeloBD.Empleado;
+
 /**
  *
  * @author NICOLAS
  */
 public class ConfiguracionEmpleados extends javax.swing.JFrame {
-
+    private ControladorPersistencia con = new ControladorPersistencia();
+    private DefaultListModel modelo = new DefaultListModel();
+    
+    
     /**
      * Creates new form ConfiguracionEmpleados
      */
     public ConfiguracionEmpleados() {
         initComponents();
+        lista.setModel(modelo);
     }
 
     /**
@@ -27,21 +37,34 @@ public class ConfiguracionEmpleados extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        txtRut = new javax.swing.JTextField();
+        btnAceptar = new javax.swing.JButton();
+        combo = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        lista = new javax.swing.JList<>();
+        btnGestionEmpleado = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Rut Empleado");
 
-        jButton1.setText("Aceptar");
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAceptarActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mostrar", "Eliminar", "Actualizar", "Contactos de Emergencia" }));
+        combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mostrar", "Eliminar", "Actualizar", "Contactos de Emergencia", "Mostrar Todos" }));
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(lista);
+
+        btnGestionEmpleado.setText("Atras");
+        btnGestionEmpleado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGestionEmpleadoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -53,13 +76,18 @@ public class ConfiguracionEmpleados extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGestionEmpleado))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAceptar)))
+                        .addGap(0, 11, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,27 +95,79 @@ public class ConfiguracionEmpleados extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRut, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGestionEmpleado))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAceptar)
+                    .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGestionEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionEmpleadoActionPerformed
+        GestionarEmpleados ges = new GestionarEmpleados();
+        ges.setVisible(true);
+        ges.setResizable(false);
+        ges.setLocationRelativeTo(null);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_btnGestionEmpleadoActionPerformed
+
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        modelo.removeAllElements();
+        String rut = txtRut.getText();
+        String opcion = combo.getSelectedItem().toString();
+        
+        if (opcion.equals("Mostrar")) {
+            modelo.addElement(con.traerEmpleado(rut));
+            
+        }
+        if (opcion.equals("Eliminar")) {
+            con.eliminarEmpleado(rut);
+        }
+        if (opcion.equals("Actualizar")) {
+            //este redirige a otra ventana, aun asi, te guarda el rut,
+            //en la siguiente ventana se coloca todo lo que quiere cambiar.
+            
+        }
+        if (opcion.equals("Contactos de Emergencia")) {
+            //invoco los datos de contactos, luego los filtro
+            List<ContactosEmergencia> contacto = con.mostrarContactos();
+            for (ContactosEmergencia conta : contacto) {
+                if (rut.equals(conta.getRutFK().getRut())) {
+                    modelo.addElement(conta);
+                }
+            }
+            
+        }
+        
+        
+        
+        
+        if (opcion.equals("Mostrar Todos")) {
+            //mostrar todos los empleados.
+            List<Empleado> emple = con.mostrarEmpleados();
+            for (Empleado emp : emple) {
+                modelo.addElement(emp);
+            }
+        }
+        
+    }//GEN-LAST:event_btnAceptarActionPerformed
+
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnGestionEmpleado;
+    private javax.swing.JComboBox<String> combo;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JList<String> lista;
+    private javax.swing.JTextField txtRut;
     // End of variables declaration//GEN-END:variables
 }

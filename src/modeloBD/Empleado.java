@@ -158,5 +158,13 @@ public class Empleado implements Serializable {
     public void setContacto(List<ContactosEmergencia> contacto) {
         this.contacto = contacto;
     }
+
+    @Override
+    public String toString() {
+        return "Empleado{" + "rut=" + rut + ", nombres=" + nombres + ", apellidos=" + apellidos + ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion + ", telefono=" + telefono + ", email=" + email + ", cargo=" + cargoFK.getNomCargo() + ", departamento=" + departamentoFK.getNomDepartamento() +'}';
+    }
+    
+    
+    
     
 }

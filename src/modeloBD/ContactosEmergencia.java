@@ -94,6 +94,11 @@ public class ContactosEmergencia implements Serializable {
     public void setRutFK(Empleado rutFK) {
         this.rutFK = rutFK;
     }
+
+    @Override
+    public String toString() {
+        return "ContactosEmergencia{" + "rutContacto=" + rutContacto + ", nombreContacto=" + nombreContacto + ", apellidoContacto=" + apellidoContacto + ", telefonoContacto=" + telefonoContacto + ", email=" + email + ", rutFK=" + rutFK.getRut() + '}';
+    }
     
     
     
