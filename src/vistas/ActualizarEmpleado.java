@@ -4,17 +4,40 @@
  */
 package vistas;
 
+import java.util.Date;
+import java.util.List;
+import logica.ControladorPersistencia;
+import logica.Logica;
+import modeloBD.Cargo;
+import modeloBD.Departamento;
+import modeloBD.Empleado;
+
 /**
  *
  * @author NICOLAS
  */
 public class ActualizarEmpleado extends javax.swing.JFrame {
-
+    private ControladorPersistencia con = new ControladorPersistencia();
+    private List<Cargo> cargoList = con.mostrarCargos();
+    private List<Departamento> depaList = con.mostrarDepartamentos();
+    
+    
+    private String rutEmpleado;
     /**
      * Creates new form ActualizarEmpleado
      */
     public ActualizarEmpleado() {
         initComponents();
+        
+        
+        
+        for (Cargo car: cargoList) {
+           comboCargo.addItem(car.getNomCargo());
+        }
+        for (Departamento departamento : depaList) {
+            comboDepartamento.addItem(departamento.getNomDepartamento());
+        }
+        
     }
 
     /**
@@ -66,6 +89,11 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         jLabel9.setText("Departamento");
 
         jButton1.setText("Actualizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -166,6 +194,49 @@ public class ActualizarEmpleado extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Logica log = new Logica();
+        Empleado emp = con.traerEmpleado(rutEmpleado);
+        
+        String rut = rutEmpleado;
+        
+        
+        String nombre = txtNombres.getText();
+        String apellido = txtApellidos.getText();
+        int dia = Integer.parseInt(txtDia.getText());
+        int mes = Integer.parseInt(txtMes.getText());
+        int anio = Integer.parseInt(txtAnio.getText());
+        String direccion = txtDireccion.getText();
+        int telefono = Integer.parseInt(txtTelefono.getText());
+        String email = txtEmail.getText();
+        String cargo = comboCargo.getSelectedItem().toString();
+        String departamento = comboDepartamento.getSelectedItem().toString();
+        
+        Date fecha = new Date(anio-1900, mes-1, dia);
+        
+        int idCargo = log.encontrarIdCargo(cargo);
+        int idDepartamento = log.encontrarIdDepartamento(departamento);
+        
+        
+        emp.setNombres(nombre);
+        emp.setApellidos(apellido);
+        emp.setFechaNacimiento(fecha);
+        emp.setDireccion(direccion);
+        emp.setTelefono(telefono);
+        emp.setDireccion(direccion);
+        emp.setEmail(email);
+        emp.setCargoFK(new Cargo(idCargo, cargo));
+        emp.setDepartamentoFK(new Departamento(idDepartamento, departamento));
+        
+        
+        con.actualizarEmpleado(emp);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    
+    
+    public void elRutDelEmpleado(String rut){
+        this.rutEmpleado = rut;
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

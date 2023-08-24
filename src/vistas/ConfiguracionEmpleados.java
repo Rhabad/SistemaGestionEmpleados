@@ -119,6 +119,8 @@ public class ConfiguracionEmpleados extends javax.swing.JFrame {
     }//GEN-LAST:event_btnGestionEmpleadoActionPerformed
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
+        ActualizarEmpleado act = new ActualizarEmpleado();
+        
         modelo.removeAllElements();
         String rut = txtRut.getText();
         String opcion = combo.getSelectedItem().toString();
@@ -133,8 +135,16 @@ public class ConfiguracionEmpleados extends javax.swing.JFrame {
         if (opcion.equals("Actualizar")) {
             //este redirige a otra ventana, aun asi, te guarda el rut,
             //en la siguiente ventana se coloca todo lo que quiere cambiar.
+            act.setVisible(true);
+            act.setResizable(false);
+            act.setLocationRelativeTo(null);
             
+            act.elRutDelEmpleado(rut);
+            
+            this.setVisible(false);
         }
+        
+        
         if (opcion.equals("Contactos de Emergencia")) {
             //invoco los datos de contactos, luego los filtro
             List<ContactosEmergencia> contacto = con.mostrarContactos();
